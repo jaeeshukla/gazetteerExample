@@ -39,7 +39,7 @@ mymap.fitBounds([
 
 mymap.setZoom(5);
 
-
+mymap.setMaxBounds([[-90,-180],[90,180]]);
 
 //var mymap = L.map('mapid').fitBounds([window.nowLat,window.nowLong],[window.nowLat,window.nowLong]);
 
@@ -48,7 +48,8 @@ mymap.setZoom(5);
 
 L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
 	maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	noWrap : true
 }).addTo(mymap);
 
 
