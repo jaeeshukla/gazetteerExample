@@ -44,15 +44,13 @@ mymap.setMaxBounds([[-90,-180],[90,180]]);
 //var mymap = L.map('mapid').fitBounds([window.nowLat,window.nowLong],[window.nowLat,window.nowLong]);
 
 
+//'https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png'
 
-
-L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	maxZoom: 19,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 	noWrap : true
 }).addTo(mymap);
-
-
 
 
 //this is the blue marker indication the country which is displayed
@@ -318,6 +316,7 @@ function funcUpdateMarker(countrycode)
 					
 				}
 				//console.log(result.features[0]['properties']['name']);
+				sortOptionData();
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				// your error code
@@ -327,7 +326,22 @@ function funcUpdateMarker(countrycode)
 		
 		
 	}	
-	
+	function sortOptionData()
+	{
+		var options = document.getElementById("selCountry").options;
+		var optionsArray = [];
+		for (var i = 0; i < options.length; i++) {
+			optionsArray.push(options[i]);
+		}
+		  optionsArray = optionsArray.sort(function (a, b) {           
+        return a.innerHTML.toLowerCase().charCodeAt(0) - b.innerHTML.toLowerCase().charCodeAt(0);    
+		});
+
+		for (var i = 0; i <= options.length; i++) {            
+        options[i] = optionsArray[i];
+		}
+		//options[0].selected = true;
+	}
 	
 	function exchangeRate(codeofcurrency)
 	{
