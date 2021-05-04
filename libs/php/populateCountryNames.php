@@ -9,15 +9,11 @@
   echo json_encode($someObject); // Access Object data
   
   */
-  
-  $strJsonFileContents = file_get_contents("log2.txt");
-// Convert to array 
-$array = json_decode($strJsonFileContents, true);
-
-
-
-
-  echo json_encode($array);
+ // $strJsonFileContents = file_get_contents("log2.json");
+ 
+ $strJsonFileContents = file_get_contents("countryBorders.geo.json");
+ $array = json_decode($strJsonFileContents, true);
+ echo json_encode($array);
 ?>
 
 

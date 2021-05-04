@@ -2,8 +2,12 @@
 
 	$executionStartTime = microtime(true) / 1000;
 	
-	$url = 'https://openexchangerates.org/api/latest.json?app_id=b8afc90f163a4ba1b24e4246199dd7bf';
-  
+//$url = 'http://api.geonames.org/wikipediaSearchJSON?formatted=true&title=united%20kingdom&maxRows=10&username=exploreapi&style=full';
+
+$url = 'http://api.geonames.org/wikipediaSearchJSON?formatted=true&title='.$_REQUEST['countryname'].'&maxRows=10&username=exploreapi&style=full';
+
+
+
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -14,9 +18,9 @@
 	curl_close($ch);
 
 	$decode = json_decode($result,true);	
-	$output['status']['url'] = $url;
-	//$output['status']['ext'] = $_REQUEST['currcodevalue'];
+
 	$output['status']['code'] = "200";
+	$output['status']['url'] = $url;
 	$output['status']['name'] = "ok";
 	$output['status']['description'] = "mission saved";
 	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";

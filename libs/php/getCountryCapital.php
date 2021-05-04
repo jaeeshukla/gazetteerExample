@@ -5,7 +5,7 @@
    // $url ='http://api.geonames.org/countryInfoJSON?formatted=true&country=' . $_REQUEST['codeofcountry'] . '&username=exploreapi&style=full';
    //commented the call for API countryInfoJSON -- and restcountries.eu is called below .
    
-   $url = 'https://restcountries.eu/rest/v2/alpha/'.$_REQUEST['codeofcountry'];
+    $url = 'https://restcountries.eu/rest/v2/alpha/'.$_REQUEST['codeofcountry'];
    
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
