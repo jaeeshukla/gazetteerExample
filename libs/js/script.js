@@ -98,7 +98,7 @@ function clickinfo(){
 				if (result.status.name == "ok") {
 
 
-					console.log("clickinfo");
+					//console.log("clickinfo");
 					console.log(result['data'][0]['countryCode'] + ", " + result['data'][0]['countryName']);
 				//	console.log(result['data'][0]['countryName']);
 					
@@ -134,7 +134,8 @@ function callCountryInfoApi(countrycode,cname)
 			success: function(result) {
 
 				
-			//	console.log(result);
+				//console.log(result);
+				var altname = "noname";
 				//console.log(result['data']['currencies'][0]['code']);
 				if (result.status.name == "ok") {
 
@@ -142,9 +143,12 @@ function callCountryInfoApi(countrycode,cname)
 					//document.getElementById("infoData").innerHTML = document.getElementById("infoData").innerHTML + "<br>" + "Capital is " +  result['data'][0]['capital'] + "<br>" + "Population is " +  result['data'][0]['population'];
 					console.log("callCountryInfoApi");
 					console.log(result['data']['capital'] + " , " + result['data']['population']  + " , " +  result['data']['currencies'][0]['name']  + " , " +  result['data']['currencies'][0]['code']);
-				
-					
-					
+				//data.altSpellings[1]
+					console.log("altname " + result['data']['altSpellings'][1]);
+					if(typeof result['data']['altSpellings'][1] !== 'undefined')
+					{
+						altname = result['data']['altSpellings'][1];
+					}
 					//3 may
 				/*
 					document.getElementById("infoData").innerHTML = "Country Name & Code : " +  result['data']['name'] 
@@ -160,8 +164,10 @@ function callCountryInfoApi(countrycode,cname)
 					arr.capital = result['data']['capital'];
 					arr.population =  result['data']['population'];
 					arr.currency = result['data']['currencies'][0]['name'] + " ( " + result['data']['currencies'][0]['symbol']  + " ) " + result['data']['currencies'][0]['code'];
-					
+					arr.alternatename = altname;
 				}
+				console.log("dropdown country name " + cname);
+				console.log("API country name " + result['data']['name']);
 				var countrynametopass = cname;
 				if(cname.indexOf('.')!== -1)
 				{
@@ -179,7 +185,7 @@ function callCountryInfoApi(countrycode,cname)
 		
 				
 				window.modal.style.display = "block";
-				console.log("callCountryInfoApi endss");
+				//console.log("callCountryInfoApi endss");
 				
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
@@ -276,22 +282,27 @@ function callCountryInfoApi(countrycode,cname)
 	
 	function functionWikipedia(countryname,curcode)
 	{
-		arr.wikipedia = "http://google.com";
-		var countrynamejoin = countryname.split(" ").join("%20");
 		
+		arr.wikipedia = "https://en.wikipedia.org/wiki/Country";
+		var count = 0;
+		var countrynamejoin = countryname.split(" ").join("%20");
+		var altername = arr.alternatename;
+		var altnamejoin = altername.split(" ").join("%20");
+		
+		console.log(countryname + " , " + curcode + " , " + arr.alternatename);
 	//console.log("Wiki country without space : " + countrynamejoin);
 		$.ajax({
 			url: "libs/php/getWikipedia.php",
 			type: 'POST',
 			dataType: 'json',
 			data: {
-				countryname: countrynamejoin
+				countryname: countrynamejoin			
 			},
 			success: function(result) {
 
-				console.log(result);
+			//	console.log(result);
 			//	console.log("count of wiki result");
-				console.log("length wikipedia result " + result.data.geonames.length);
+				//console.log("length wikipedia result " + result.data.geonames.length);
 
 				if (result.status.name == "ok") {
 					
@@ -301,10 +312,10 @@ function callCountryInfoApi(countrycode,cname)
 						//if(result['data']['geonames'][$x]['feature'] == "country")
 						if(result['data']['geonames'][$x]['title'].toLowerCase().localeCompare(countryname.toLowerCase()) == 0)
 						{
-							console.log("Wikioedia");
+							console.log("Wikipedia record");
 							console.log(result['data']['geonames'][$x]);
 							
-							console.log(result['data']['geonames'][$x]['wikipediaUrl']);
+							//console.log(result['data']['geonames'][$x]['wikipediaUrl']);
 							
 							//3 may
 						/*
@@ -312,21 +323,40 @@ function callCountryInfoApi(countrycode,cname)
 							+ "<br>" + "Wikipedia link for country: " + result['data']['geonames'][$x]['wikipediaUrl'];
 						*/
 							arr.wikipedia = "https://" + result['data']['geonames'][$x]['wikipediaUrl'];
-							
+							count = 1;
 						}
 						
-					
 					}
 					
+					
+						//	console.log(arr.wikipedia);
+				//start 5 may
+				if(count == 0 && altername != "noname")
+				{
+										
+						//console.log("New name " + altnamejoin);
+						//en.wikipedia.org/wiki/Ivory_Coast
+						arr.wikipedia = "https://en.wikipedia.org/wiki/" + altnamejoin;					
+					
 				}
-				exchangeRate(curcode);
+				//end 5 may 
+					
+					
+				}
+				
+				
+				
+				//exchangeRate(curcode);
 			
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				// your error code
 			}
-		}); 
-		//console.log("Wikioedia ends");
+		});
+		
+		
+		
+		exchangeRate(curcode);
 	}
 	
 	
@@ -389,7 +419,7 @@ function callCountryInfoApi(countrycode,cname)
 function callfuncEnd()
 {
 	
-	console.log("callfuncEnd : " + arr.wikipedia);
+	//console.log("callfuncEnd : " + arr.wikipedia);
 	var searchlink = arr.wikipedia;
 		document.getElementById("infoData").innerHTML = "Country Name & Code: " +  arr.name
 				+ " ( " +  arr.code + " ) "
@@ -438,10 +468,10 @@ function funcUpdateMarker(countrycode)
 
 				if (result.status.name == "ok") {
 				
-					console.log("new coordinates");
-					console.log(result['data']['name']);
-					console.log(result['data']['capital']);
-					console.log(result['data']['latlng']);
+				//	console.log("new coordinates");
+				//	console.log(result['data']['name']);
+				//	console.log(result['data']['capital']);
+				//	console.log(result['data']['latlng']);
 					//console.log(result['data']['latlng'][0]);
 					//console.log(result['data']['latlng'][1]);
 					window.nowLat = result['data']['latlng'][0];
