@@ -2,7 +2,9 @@
 var arr = new Object();
 
 var nowLat,nowLong;
+var loadcountry;
 
+var mytable = document.getElementById("mytableid");
 var marker;
 var mymap = L.map('mapid');
 var myLayer = L.geoJSON().addTo(mymap);
@@ -52,12 +54,13 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	noWrap : true
 }).addTo(mymap);
 
+/*
 
 //this is the blue marker indication the country which is displayed
   window.marker = L.marker([window.nowLat,window.nowLong], {icon : redIcon}).addTo(mymap).on('click', onClick);
 marker.bindPopup("<b>Hello!</b><br>You are here. Click for details.").openPopup();
 
-
+*/
 
 
 
@@ -65,19 +68,57 @@ var latlngs = [[[-104.05, 48.99],[-97.22,  48.98],[-96.58,  45.94],[-104.03, 45.
 		
 //var latlngs = [[37, -109.05],[41, -109.03],[41, -102.05],[37, -102.04]];
 
+
 getCountry();
+getcodeforBorder(window.nowLat,window.nowLong);
+
+clickinfo();
+
 
 } //end function
 
 
-function onClick(e)
+//function onClick(e)
+function dontcallMe()
 {
   //window.marker.closePopup();
 
-  modal.style.display = "block";
+
+//commented on 3 june to hide model
+  //modal.style.display = "block";
   clickinfo();
 	
 
+}
+
+function getcodeforBorder(lat,lon)
+{
+
+	$.ajax({
+			url: "libs/php/getCountryInfo.php",
+			type: 'POST',
+			dataType: 'json',
+			data: {
+				latitude: lat,
+				longitude: lon
+			},
+			success: function(result) {
+
+				if (result.status.name == "ok") {
+					
+					//window.loadcountry = result['data'][0]['countryCode'];
+					functionloadBorder(result['data'][0]['countryCode']);
+				
+					
+				}
+			
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				// your error code
+			}
+		}); 
+		
+	
 }
 
 function clickinfo(){
@@ -107,8 +148,8 @@ function clickinfo(){
 					callCountryInfoApi(result['data'][0]['countryCode'],result['data'][0]['countryName']);
 					
 					
-					functionloadBorder(result['data'][0]['countryCode']);
-					
+				//	functionloadBorder(result['data'][0]['countryCode']);
+				//comment 24 may	
 					
 				}
 			
@@ -165,6 +206,17 @@ function callCountryInfoApi(countrycode,cname)
 					arr.population =  result['data']['population'];
 					arr.currency = result['data']['currencies'][0]['name'] + " ( " + result['data']['currencies'][0]['symbol']  + " ) " + result['data']['currencies'][0]['code'];
 					arr.alternatename = altname;
+					
+					
+					
+					document.getElementById("id1").firstChild.data = result['data']['name'] + " / " + countrycode;
+					document.getElementById("id2").firstChild.data = result['data']['capital'];
+					document.getElementById("id3").firstChild.data = result['data']['population'];
+					document.getElementById("id4").firstChild.data = result['data']['currencies'][0]['name'] + " ( " + result['data']['currencies'][0]['symbol']  + " ) " + result['data']['currencies'][0]['code'];
+					
+					
+				//	mytable.rows[1].cells[1].textContent = countrycode;
+				//	mytable.rows[1].cells[2].textContent = altname;
 				}
 				console.log("dropdown country name " + cname);
 				console.log("API country name " + result['data']['name']);
@@ -183,9 +235,9 @@ function callCountryInfoApi(countrycode,cname)
 				//exchangeRate(result['data']['currencies'][0]['code']);
 			//4may
 		
+				//commented on 3 june to hide the model
+				//window.modal.style.display = "block";
 				
-				window.modal.style.display = "block";
-				//console.log("callCountryInfoApi endss");
 				
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
@@ -222,7 +274,7 @@ function callCountryInfoApi(countrycode,cname)
 				//3 may
 			//	document.getElementById("infoData").innerHTML = document.getElementById("infoData").innerHTML + "<br>" + "Exchange Rate : " + result['data']['rates'][codeofcurrency] + " " +result['data']['base'];
 				arr.exchangerate = result['data']['rates'][codeofcurrency] + " " +result['data']['base'];
-			
+			document.getElementById("id5").firstChild.data = result['data']['rates'][codeofcurrency] + " " +result['data']['base'];
 				}
 				//callfuncEnd();
 				funcGetWeather(window.nowLat,window.nowLong);
@@ -268,6 +320,11 @@ function callCountryInfoApi(countrycode,cname)
 					//arr.temperature = TempCelcius + "degree " + " C , " + result['data']['weather'][0]['description'];
 					arr.temperature = TempCelcius; 
 					arr.tempdescription = result['data']['weather'][0]['description'];
+					
+					var degreestring = "o".sup();
+					
+					document.getElementById("id6").firstChild.data = TempCelcius + " degree " + "C";
+					
 				}
 			
 				callfuncEnd();
@@ -321,9 +378,17 @@ function callCountryInfoApi(countrycode,cname)
 						/*
 							document.getElementById("infoData").innerHTML = document.getElementById("infoData").innerHTML
 							+ "<br>" + "Wikipedia link for country: " + result['data']['geonames'][$x]['wikipediaUrl'];
-						*/
+						*/	arr.wikipedia = "";
 							arr.wikipedia = "https://" + result['data']['geonames'][$x]['wikipediaUrl'];
 							count = 1;
+							document.getElementById("id7").firstChild.data = "https://" + result['data']['geonames'][$x]['wikipediaUrl'];
+							
+							 var link = document.getElementById("hlink");
+
+   
+							link.innerHTML = "Check out info";
+							link.setAttribute('href', "https://" + result['data']['geonames'][$x]['wikipediaUrl']);
+	
 						}
 						
 					}
@@ -334,7 +399,7 @@ function callCountryInfoApi(countrycode,cname)
 				if(count == 0 && altername != "noname")
 				{
 										
-						//console.log("New name " + altnamejoin);
+						console.log("New name " + altnamejoin);
 						//en.wikipedia.org/wiki/Ivory_Coast
 						arr.wikipedia = "https://en.wikipedia.org/wiki/" + altnamejoin;					
 					
@@ -387,7 +452,8 @@ function callCountryInfoApi(countrycode,cname)
 					{
 						
 						var someFeatures = result.features[$x];
-					     myLayer.addData(someFeatures);
+					     myLayer.addData(someFeatures).on('click', onClick);
+						
 						
 						/*
 							//below code makes the borders of the country on the map
@@ -432,7 +498,8 @@ function callfuncEnd()
 	 
 }
 
-function onClickMarker(e)
+//function onClickMarker(e)
+function getAllData()
 {
 	
 	var selCountrycode = document.getElementById("selCountry").value;
@@ -477,11 +544,12 @@ function funcUpdateMarker(countrycode)
 					window.nowLat = result['data']['latlng'][0];
 					window.nowLong = result['data']['latlng'][1];
 					
-					mymap.removeLayer(marker);
+					//24 may
+					//mymap.removeLayer(marker);
 					
 					//this is the blue marker indication the country which is displayed
-					window.marker = L.marker(result['data']['latlng'], {icon : redIcon }).addTo(mymap).on('click', onClickMarker);
-					marker.bindPopup("<b>Hello! You are here. Click for Info </b>").openPopup();
+					//window.marker = L.marker(result['data']['latlng'], {icon : redIcon }).addTo(mymap).on('click', onClickMarker);
+				//	marker.bindPopup("<b>Hello! You are here. Click for Info </b>").openPopup();
 					
 					mymap.fitBounds([result['data']['latlng'],result['data']['latlng']]);
 					mymap.setZoom(5);
@@ -569,7 +637,7 @@ function funcUpdateMarker(countrycode)
 				
 				funcUpdateMarker(selectval);
 			
-			
+			getAllData();
 				
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
@@ -627,12 +695,14 @@ function funcUpdateMarker(countrycode)
 				 
 				 var x = document.getElementById("selCountry");
 				
+				/*
 				 var optiony = document.createElement("option");
 					optiony.text = "Select";
+					optiony.value = "12";
 					optiony.disabled = true;
 					optiony.selected = true;
 					 x.add(optiony);
-					 
+					*/ 
 				 
 				for ($x = 0; $x <result.features.length; $x++) {
 					
@@ -654,6 +724,7 @@ function funcUpdateMarker(countrycode)
 				}
 				//console.log(result.features[0]['properties']['name']);
 				sortOptionData();
+				funcSetCountry();
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				// your error code
@@ -677,11 +748,58 @@ function funcUpdateMarker(countrycode)
 		for (var i = 0; i <= options.length; i++) {            
         options[i] = optionsArray[i];
 		}
+		console.log("loadcountry" + window.loadcountry);
+		console.log("options....");
+		console.log(options[1]);
 		//options[0].selected = true;
 	}
 	
 
 	
+//this function is to set the current country in the dropdown
+
+function funcSetCountry()
+{
+	var optval = document.getElementById("selCountry");
+	console.log(optval);
+	
+		$.ajax({
+			url: "libs/php/getCountryInfo.php",
+			type: 'POST',
+			dataType: 'json',
+			data: {
+				latitude: window.nowLat,
+				longitude: window.nowLong
+			},
+			success: function(result) {
+
+				if (result.status.name == "ok") {
+					
+					//window.loadcountry = result['data'][0]['countryCode'];
+					var curCountryCode = result['data'][0]['countryCode'];
+					
+					for (var i = 0; i <= optval.length; i++) {            
+							if(optval[i].value == curCountryCode)
+							{
+								console.log("selected country is " + optval[i].value + curCountryCode);
+								optval.value = optval[i].value;
+								
+								
+							}
+						}
+					
+					
+				}
+		
+			
+		},
+			error: function(jqXHR, textStatus, errorThrown) {
+				// your error code
+			}
+		}); 
+		
+	
+}
 
 	
 //get the counrty code and country name from findNearbyPlaceNameJSON
@@ -722,4 +840,4 @@ window.onclick = function(event) {
 }
 
 
-
+   
