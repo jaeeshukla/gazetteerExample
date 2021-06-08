@@ -1,50 +1,90 @@
-#mapid { 
-height: 700px; 
 
+
+  body {
+        padding: 0px;
+        margin: 0px;
+    }
+       body, html , #mapid {
+            height: 100%; 
+            width: 100%;
+        }
+		
+		
+#mapid{         
+    position: absolute;
+    top:0;
+    left:0;
 }
 
-body {font-family: Arial, Helvetica, sans-serif;}
 
+.table, .table-striped, .country{
+position:fixed;
+margin-left: 100px;
+
+z-index:1001;
+ -moz-border-radius: 5px !important;
+  border-collapse: collapse !important;
+  border: none !important;
+}
+
+/*
 .country{
 	padding-top : 10px;
 	 font-family: "Times New Roman", Times, serif;
 	 font-weight : bold;
 	 height: 75px;
 	 margin-top : 15px;
-	
+
+
 }
+
+*/
 
 #selCountry
 {
-	  /*background-color: rgb(163 243 162);*/
-	  background-color : rgb(226,60,120,0.5);
-	  color: white;
+	  /*background-color: rgb(226,60,120,0.5);*/
+	  background-color : rgb(255,255,255);
+	  color: black;
 	  border : 2px solid black;
 	  border-radius : 4px;
 	  padding: 5px;
+	  margin-top: 20px;
+	  
 }
 
-#lblname{
+/* #lblname{
 	color: black;
 	padding-right: 15px;
 	padding-left: 15px;
-}
+} */
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
   margin-top: 70px;
   padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 900px; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(186,125,186); /* Fallback color */
   background-color: rgba(186,125,186,0.4); /* Black w/ opacity */
+  
+ height: 100%;
+width: 100%;
+left: 0;
+position: absolute;
+top: 0;
+z-index:0;
+
 }
 
+/*
+   position: fixed; 
+  z-index: 1; 
+   left: 0;
+  top: 0;
+    width: 100%; 
+  height: 900px; 
+
+  */
+  
 /* Modal Content */
 div.modal-content {
 /* background-color : rgb(246,246,246,0.5);*/
@@ -81,17 +121,21 @@ div.modal-content {
 }
 
 
-/* The Close Button */
-.close {
-  color: rgb(45,62,155);
-  float: left;
-  font-size: 28px;
-  font-weight: bold;
+.iconcolor{
+color: red;
+
 }
 
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
+.close
+{
+	text-align: center;
+	
+}
+
+#llink
+{
+	position:fixed;
+	z-index: 5001;
+	margin-top: 500px;
+	color:red;
 }
