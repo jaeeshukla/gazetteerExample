@@ -5,7 +5,7 @@ var nowLat,nowLong;
 var loadcountry;
 
 var mytable = document.getElementById("mytableid");
-var marker;
+//var marker;
 var mymap = L.map('mapid');
 var myLayer = L.geoJSON().addTo(mymap);
 var redIcon = L.icon({
@@ -54,14 +54,20 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	noWrap : true
 }).addTo(mymap);
 
-/*
+/* 
 
 //this is the blue marker indication the country which is displayed
   window.marker = L.marker([window.nowLat,window.nowLong], {icon : redIcon}).addTo(mymap).on('click', onClick);
-marker.bindPopup("<b>Hello!</b><br>You are here. Click for details.").openPopup();
+marker.bindPopup("<b>Hello!</b><br>You are here.").openPopup();
 
-*/
+ */
 
+var circle = L.circle([window.nowLat,window.nowLong], {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: 10000
+}).addTo(mymap);
 
 
 var latlngs = [[[-104.05, 48.99],[-97.22,  48.98],[-96.58,  45.94],[-104.03, 45.94],[-104.05, 48.99]]];
@@ -209,14 +215,24 @@ function callCountryInfoApi(countrycode,cname)
 					
 					
 					
+					
 					document.getElementById("id1").firstChild.data = result['data']['name'] + " / " + countrycode;
 					document.getElementById("id2").firstChild.data = result['data']['capital'];
+					//var commasep = 
 					document.getElementById("id3").firstChild.data = result['data']['population'];
 					document.getElementById("id4").firstChild.data = result['data']['currencies'][0]['name'] + " ( " + result['data']['currencies'][0]['symbol']  + " ) " + result['data']['currencies'][0]['code'];
 					
 					
 				//	mytable.rows[1].cells[1].textContent = countrycode;
 				//	mytable.rows[1].cells[2].textContent = altname;
+				
+				//this is for bootstrap modal
+				document.getElementById("cid").innerHTML = result['data']['name'] + " / " + countrycode;
+				document.getElementById("capid").innerHTML = result['data']['capital'];
+				document.getElementById("pid").innerHTML = result['data']['population'];
+				//document.getElementById("currid").innerHTML = result['data']['currencies'][0]['name'] + " ( " + result['data']['currencies'][0]['symbol']  + " ) " + result['data']['currencies'][0]['code'];
+				
+				document.getElementById("currencyid").innerHTML = result['data']['currencies'][0]['name'] + " ( " + result['data']['currencies'][0]['symbol']  + " ) " + result['data']['currencies'][0]['code'];
 				}
 				console.log("dropdown country name " + cname);
 				console.log("API country name " + result['data']['name']);
@@ -275,6 +291,10 @@ function callCountryInfoApi(countrycode,cname)
 			//	document.getElementById("infoData").innerHTML = document.getElementById("infoData").innerHTML + "<br>" + "Exchange Rate : " + result['data']['rates'][codeofcurrency] + " " +result['data']['base'];
 				arr.exchangerate = result['data']['rates'][codeofcurrency] + " " +result['data']['base'];
 			document.getElementById("id5").firstChild.data = result['data']['rates'][codeofcurrency] + " " +result['data']['base'];
+			
+			//document.getElementById("exrate").innerHTML = result['data']['rates'][codeofcurrency] + " " +result['data']['base'];
+			
+			document.getElementById("exchangerateid").innerHTML = result['data']['rates'][codeofcurrency] + " " +result['data']['base'];
 				}
 				//callfuncEnd();
 				funcGetWeather(window.nowLat,window.nowLong);
@@ -300,8 +320,8 @@ function callCountryInfoApi(countrycode,cname)
 				longitude: longi
 			},
 			success: function(result) {
-				//console.log("weather data");
-			//	console.log(result);
+				console.log("weather data");
+				console.log(result);
 
 				if (result.status.name == "ok") {
 
@@ -325,6 +345,10 @@ function callCountryInfoApi(countrycode,cname)
 					
 					document.getElementById("id6").firstChild.data = TempCelcius + " degree " + "C";
 					
+					
+					//document.getElementById("weaid").innerHTML = TempCelcius + " degree " + "C, " + result['data']['weather'][0]['description'];
+					
+					document.getElementById("weatherid").innerHTML = TempCelcius + " degree " + "C, " + result['data']['weather'][0]['description'];
 				}
 			
 				callfuncEnd();
@@ -383,11 +407,16 @@ function callCountryInfoApi(countrycode,cname)
 							count = 1;
 							document.getElementById("id7").firstChild.data = "https://" + result['data']['geonames'][$x]['wikipediaUrl'];
 							
+							
+							document.getElementById("wikiid").innerHTML =  "https://" + result['data']['geonames'][$x]['wikipediaUrl'];
+							
 							 var link = document.getElementById("hlink");
 
    
 							link.innerHTML = "Check out info";
 							link.setAttribute('href', "https://" + result['data']['geonames'][$x]['wikipediaUrl']);
+	
+	
 	
 						}
 						
@@ -484,7 +513,8 @@ function callCountryInfoApi(countrycode,cname)
 	
 function callfuncEnd()
 {
-	
+	console.log("commented this function");
+	/*
 	//console.log("callfuncEnd : " + arr.wikipedia);
 	var searchlink = arr.wikipedia;
 		document.getElementById("infoData").innerHTML = "Country Name & Code: " +  arr.name
@@ -495,6 +525,8 @@ function callfuncEnd()
 					+ "<br>" + "Exchange Rate: " + arr.exchangerate
 					+ "<br>" + "Temperature: " +  arr.temperature + "o".sup() + "C , " + arr.tempdescription
 					+ "<br>" + "Wikipedia link: " + '<a href="' + arr.wikipedia + '" target="_blank">' + searchlink + '</a>';
+					
+					*/
 	 
 }
 
@@ -573,7 +605,7 @@ function funcUpdateMarker(countrycode)
 	 function myFunction(){
 		 console.log("existing someFeatures");
 		 console.log(window.someFeatures);
-		 modal.style.display = "none";
+		// modal.style.display = "none";
 		 
 		 myLayer.clearLayers(); 
 	
@@ -633,7 +665,7 @@ function funcUpdateMarker(countrycode)
 					
 					
 				}
-				document.getElementById("infoData").innerHTML = "";
+				//document.getElementById("infoData").innerHTML = "";
 				
 				funcUpdateMarker(selectval);
 			
