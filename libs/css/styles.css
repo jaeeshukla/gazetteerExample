@@ -25,8 +25,14 @@ z-index:1001;
  -moz-border-radius: 5px !important;
   border-collapse: collapse !important;
   border: none !important;
+
 }
 
+.table{
+width : auto,
+margin-bottom: 1rem;
+vertical-align : top;
+}
 /*
 .country{
 	padding-top : 10px;
@@ -52,61 +58,6 @@ z-index:1001;
 	  
 }
 
-/* #lblname{
-	color: black;
-	padding-right: 15px;
-	padding-left: 15px;
-} */
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  margin-top: 70px;
-  padding-top: 100px; /* Location of the box */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(186,125,186); /* Fallback color */
-  background-color: rgba(186,125,186,0.4); /* Black w/ opacity */
-  
- height: 100%;
-width: 100%;
-left: 0;
-position: absolute;
-top: 0;
-z-index:0;
-
-}
-
-/*
-   position: fixed; 
-  z-index: 1; 
-   left: 0;
-  top: 0;
-    width: 100%; 
-  height: 900px; 
-
-  */
-  
-/* Modal Content */
-div.modal-content {
-/* background-color : rgb(246,246,246,0.5);*/
-
- background-color: rgba(186,125,186,0.7);
-  margin: auto;
-  padding: 20px;
-   border: 1px solid black;
-   border-radius: 0.7rem;
-  color: rgb(20,20,20);
-  width:60%;
-  overflow: auto;
-  font-family: serif;
-  font-weight:bold;
-   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5),0 6px 20px 0 rgba(0,0,0,0.5);
-  
-  -webkit-animation-name: animatetop;
-  -webkit-animation-duration: 0.4s;
-  animation-name: animatetop;
-  animation-duration: 0.5s;
-  height:300px;
-}
 
 
 /* Add Animation */
@@ -139,3 +90,37 @@ color: red;
 	margin-top: 500px;
 	color:red;
 }
+
+
+
+
+#btnlaunch
+{
+	
+	margin-left: 30px;
+	z-index:30001;
+}
+
+#btnweather
+{
+	z-index:1050;
+
+
+}
+
+#btncurrency
+{
+	z-index:3050;
+}
+
+.modal-body {
+    overflow : auto;
+	height: 200px;
+	
+}
+
+.modal-body table {
+  max-width: 100%;
+}
+
+
