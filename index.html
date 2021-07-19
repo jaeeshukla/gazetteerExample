@@ -25,6 +25,18 @@
 	<!-- below two links are to bootsrap framework-->
    <link rel="stylesheet" href="bootstrap-5.0.0-beta2-dist/bootstrap-5.0.0-beta2-dist/css/bootstrap.min.css"> 
    <script src="bootstrap-5.0.0-beta2-dist/bootstrap-5.0.0-beta2-dist/css/js/bootstrap.min.js"></script>
+   
+   
+       <!-- below 2 links to add css and js of easyButtons -->
+   <link rel="stylesheet" href="vendor/css/easy-button.css">
+   <script src="vendor/js/easy-button.js"></script>
+   
+      
+   <!-- css for currency -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+   
+   
 	</head>
 	<body>
 	
@@ -57,17 +69,13 @@
 	
 
 <!-- <div id="myModal" class="modal">
-
   
   <div class="modal-content">
     <span class="close">&times;</span>
     <p id="infoData"> </p>
   </div>
   
-
-
 </div>
-
  -->
 
 	 <div id="mapid">
@@ -81,7 +89,6 @@
 <!-- <script>	
 		
 		var x = document.getElementById("demo");
-
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
@@ -89,11 +96,9 @@ function getLocation() {
     x.innerHTML = "Geolocation is not supported by this browser.";
   }
 }
-
 function showPosition(position) {
   x.innerHTML = "Latitude: " + position.coords.latitude + 
   "<br>Longitude: " + position.coords.longitude;
-
 console.log(position.coords.latitude);
 console.log(position.coords.longitude);
 }
@@ -123,7 +128,8 @@ console.log(position.coords.longitude);
 	<!--    <div> Weather </div>
 	  <div id="weatherid"> </div> -->
       
-		<table class="table table-success d-inline-flex">
+		<!-- <table class="table table-success d-inline-flex"> -->
+		<table>
  	<tr>
       <td class="iconcolor">
 	  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-sun-fill" viewBox="0 0 16 16">
@@ -173,7 +179,8 @@ console.log(position.coords.longitude);
       </div> -->
       <div class="modal-body overflow-auto">
       
-		<table class="table table-success d-inline-flex">
+		<!-- <table class="table table-success d-inline-flex"> -->
+		<table>
  	<tr>
 	<td class="iconcolor">
 	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-pound" viewBox="0 0 16 16">
@@ -234,12 +241,10 @@ console.log(position.coords.longitude);
       </div> -->
       <div class="modal-body ">
       
-		<table class="table table-success d-inline-flex table-striped border border-success">
- 
+		<!-- <table class="table table-success d-inline-flex table-striped border border-success"> -->
+ <table>
   <tbody>
-  <tr class="table-secondary">
-  <td colspan="3">Information</td>
-  </tr>
+ 
     <tr class="table-success">
       <th scope="row" class="iconcolor">
 	  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-globe2" viewBox="0 0 16 16">
