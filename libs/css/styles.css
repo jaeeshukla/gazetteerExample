@@ -1,6 +1,4 @@
-
-
-  body {
+ body {
         padding: 0px;
         margin: 0px;
     }
@@ -40,10 +38,7 @@ vertical-align : top;
 	 font-weight : bold;
 	 height: 75px;
 	 margin-top : 15px;
-
-
 }
-
 */
 
 #selCountry
@@ -115,12 +110,11 @@ color: red;
 
 .modal-body {
     overflow : auto;
-	height: 200px;
+	height: 400px;
 	
 }
 
 .modal-body table {
   max-width: 100%;
+  
 }
-
-
