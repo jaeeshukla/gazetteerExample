@@ -1,9 +1,8 @@
-
 var arr = new Object();
 
 var nowLat,nowLong;
 var loadcountry;
-
+var ctEasyBtn;
 var mytable = document.getElementById("mytableid");
 //var marker;
 var mymap = L.map('mapid');
@@ -55,11 +54,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(mymap);
 
 /* 
-
 //this is the blue marker indication the country which is displayed
   window.marker = L.marker([window.nowLat,window.nowLong], {icon : redIcon}).addTo(mymap).on('click', onClick);
 marker.bindPopup("<b>Hello!</b><br>You are here.").openPopup();
-
  */
 
 var circle = L.circle([window.nowLat,window.nowLong], {
@@ -80,9 +77,23 @@ getcodeforBorder(window.nowLat,window.nowLong);
 
 clickinfo();
 
-
+loadeasybutton();
 } //end function
 
+
+function loadeasybutton()
+{
+	/*
+	ctEasyBtn = L.easyButton('fa-rupee', function(){
+		document.getElementById("weatherModal").show();
+	}).addTo(mymap);
+	*/
+	
+	ctEasyBtn = L.easyButton('fa-money', function(){
+		alert("hello");
+	}).addTo(mymap);
+	
+}
 
 //function onClick(e)
 function dontcallMe()
@@ -870,6 +881,3 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
-
-
-   
